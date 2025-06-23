@@ -1,0 +1,83 @@
+package com.example.translateApp.view
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import androidx.fragment.app.DialogFragment
+import com.example.tempapplication.R
+
+/**
+ * Dialog que muestra las funcionalidades de ML Kit disponibles
+ */
+class MLKitFeaturesDialog : DialogFragment() {
+    private var btnTextRecognition: Button? = null
+    private var btnTranslation: Button? = null
+    private var btnBarcodeScanner: Button? = null
+    private var btnImageLabeling: Button? = null
+    private var btnFaceDetection: Button? = null
+    private var btnLandmarkDetection: Button? = null
+    private var btnClose: Button? = null
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.dialog_mlkit_features, container, false)
+        initViews(view)
+        setupClickListeners()
+        return view
+    }
+
+    private fun initViews(view: View) {
+        btnTextRecognition = view.findViewById(R.id.btnTextRecognition)
+        btnTranslation = view.findViewById(R.id.btnTranslation)
+        btnBarcodeScanner = view.findViewById(R.id.btnBarcodeScanner)
+        btnImageLabeling = view.findViewById(R.id.btnImageLabeling)
+        btnFaceDetection = view.findViewById(R.id.btnFaceDetection)
+        btnLandmarkDetection = view.findViewById(R.id.btnLandmarkDetection)
+        btnClose = view.findViewById(R.id.btnClose)
+    }
+
+    private fun setupClickListeners() {
+        btnTextRecognition?.setOnClickListener {
+            // Notificar a la actividad principal para abrir la selección de imagen
+            dismiss()
+            (activity as? TranslateActivity)?.openImageSelector()
+        }
+
+        btnTranslation?.setOnClickListener {
+            // Enfocar en el campo de texto para usar la traducción
+            dismiss()
+            (activity as? TranslateActivity)?.focusOnTextInput()
+        }
+
+        btnBarcodeScanner?.setOnClickListener {
+            val barcodeDialog = BarcodeScannerRealtimeDialog()
+            barcodeDialog.show(parentFragmentManager, "BarcodeScanner")
+            dismiss()
+        }
+
+        btnImageLabeling?.setOnClickListener {
+            val imageLabelingDialog = ImageLabelingRealtimeDialog()
+            imageLabelingDialog.show(parentFragmentManager, "ImageLabeling")
+            dismiss()
+        }
+
+        btnFaceDetection?.setOnClickListener {
+            val faceDetectionDialog = FaceDetectionDialogRealtime()
+            faceDetectionDialog.show(parentFragmentManager, "FaceDetection")
+            dismiss()
+        }
+
+        btnLandmarkDetection?.setOnClickListener {
+            val landmarkDialog = LandmarkDetectionDialogRealtime()
+            landmarkDialog.show(parentFragmentManager, "LandmarkDetection")
+            dismiss()
+        }
+
+        btnClose?.setOnClickListener {
+            dismiss()
+        }
+    }
+}

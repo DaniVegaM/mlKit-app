@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ML Translate App - Documentation</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #7f8c8d;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border-left: 4px solid #3498db;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 0;
+            padding-left: 20px;
+            color: #7f8c8d;
+        }
+        .emoji {
+            font-size: 1.2em;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+<h1>Manual de Usuario</h1>
+<h2>ML Translate App - Versión Universitaria con ML Kit</h2>
+<br>
+<p><strong>Desarrollado por:</strong></p>
+<li>Daniel Vega Miranda</li>
+<li>Abraham Reyes Cuevas</li>
+<br>
+<p>**Fecha:** Junio 2025</p>
+<p>**Versión:** 2.0 - Edición Universitaria</p>
+<br>
+<hr>
+<br>
+<h2>📱 Introducción</h2>
+<br>
+<p>ML Translate App es una aplicación Android avanzada que integra múltiples funcionalidades de Machine Learning (ML Kit) para análisis de imágenes, texto y detección de objetos en tiempo real. Esta versión universitaria incluye más de 5 funcionalidades diferentes de ML Kit con capacidades tanto offline como online.</p>
+<br>
+<h2>🚀 Características Principales</h2>
+<br>
+<h3>✨ Funcionalidades ML Kit Integradas:</h3>
+<br>
+<p>1. **📝 Reconocimiento de Texto (OCR)**</p>
+<p>   - Extracción de texto de imágenes</p>
+<p>   - Soporte para múltiples idiomas</p>
+<p>   - Procesamiento offline</p>
+<br>
+<p>2. **🌐 Traducción de Texto**</p>
+<p>   - Traducción entre múltiples idiomas</p>
+<p>   - Detección automática de idioma</p>
+<p>   - Funcionalidad offline después de descargar paquetes</p>
+<br>
+<p>3. **📱 Escáner de Códigos de Barras (Tiempo Real)**</p>
+<p>   - QR Codes, códigos de barras UPC, EAN</p>
+<p>   - Análisis en tiempo real con cámara</p>
+<p>   - Múltiples formatos soportados</p>
+<br>
+<p>4. **🏷️ Etiquetado de Imágenes (Tiempo Real)**</p>
+<p>   - Identificación automática de objetos</p>
+<p>   - Análisis en tiempo real con cámara</p>
+<p>   - Niveles de confianza para cada etiqueta</p>
+<br>
+<p>5. **👥 Detección de Rostros (Tiempo Real)**</p>
+<p>   - Detección facial en tiempo real</p>
+<p>   - Análisis de expresiones (sonrisa, ojos abiertos)</p>
+<p>   - Información de posición y rotación</p>
+<br>
+<p>6. **🏛️ Detección de Monumentos (Tiempo Real)**</p>
+<p>   - Identificación de lugares y monumentos</p>
+<p>   - Análisis arquitectónico</p>
+<p>   - Clasificación de edificios históricos</p>
+<br>
+<p>7. **📊 Historial de Análisis**</p>
+<p>   - Registro completo de todos los análisis</p>
+<p>   - Detalles y metadatos de cada operación</p>
+<p>   - Visualización organizada por fecha</p>
+<br>
+<h2>🎯 Cómo Usar la Aplicación</h2>
+<br>
+<h3>1. Pantalla Principal</h3>
+<li>**Campo de texto central:** Para introducir texto a traducir</li>
+<li>**Botón "Detectar Idioma":** Identifica automáticamente el idioma del texto</li>
+<li>**Selector de idioma origen y destino:** Para configurar la traducción</li>
+<li>**Botón "Traducir":** Ejecuta la traducción</li>
+<li>**Botón ML Kit (⚡):** Accede a todas las funcionalidades avanzadas</li>
+<br>
+<h3>2. Menú ML Kit Features</h3>
+<br>
+<p>Al tocar el botón ML Kit (⚡), se abre un menú con todas las funcionalidades:</p>
+<br>
+<h4>📝 Reconocimiento de Texto</h4>
+<li>Toca para abrir el selector de imagen</li>
+<li>Selecciona una imagen de la galería o toma una foto</li>
+<li>El texto extraído aparece automáticamente en el campo principal</li>
+<br>
+<h4>🌐 Traducción</h4>
+<li>Toca para enfocar el campo de texto</li>
+<li>Introduce texto manualmente o usa OCR</li>
+<li>Configura idiomas y traduce</li>
+<br>
+<h4>📱 Escáner de Códigos de Barras</h4>
+<li>Se abre la cámara en tiempo real</li>
+<li>**"Iniciar Análisis":** Comienza el escaneo automático</li>
+<li>**"Galería":** Selecciona imagen de galería</li>
+<li>**Formatos soportados:** QR, UPC, EAN, Code 128, Data Matrix, PDF417, etc.</li>
+<br>
+<h4>🏷️ Etiquetado de Imágenes</h4>
+<li>Cámara en tiempo real para identificar objetos</li>
+<li>**"Iniciar Análisis":** Análisis automático continuo</li>
+<li>**"Galería":** Analizar imagen guardada</li>
+<li>Muestra etiquetas con porcentaje de confianza</li>
+<br>
+<h4>👥 Detección de Rostros</h4>
+<li>Cámara frontal en tiempo real</li>
+<li>**"Iniciar Análisis":** Detección automática</li>
+<li>**Información mostrada:**</li>
+<p>  - Número de rostros detectados</p>
+<p>  - Posición y dimensiones</p>
+<p>  - Probabilidad de sonrisa</p>
+<p>  - Estado de ojos (abiertos/cerrados)</p>
+<p>  - Ángulos de rotación</p>
+<br>
+<h4>🏛️ Detección de Monumentos</h4>
+<li>Cámara trasera para análisis arquitectónico</li>
+<li>**"Iniciar Análisis":** Identificación automática</li>
+<li>**Características:**</li>
+<p>  - Identificación de edificios históricos</p>
+<p>  - Clasificación arquitectónica</p>
+<p>  - Análisis de elementos estructurales</p>
+<br>
+<h3>3. Historial de Análisis</h3>
+<br>
+<li>**Acceso:** Botón "Historial" en la pantalla principal</li>
+<li>**Visualización:** Lista cronológica de todos los análisis</li>
+<li>**Detalles:** Toca cualquier elemento para ver información completa</li>
+<li>**Información incluida:**</li>
+<p>  - Tipo de análisis realizado</p>
+<p>  - Resultado obtenido</p>
+<p>  - Fecha y hora</p>
+<p>  - Nivel de confianza</p>
+<p>  - Metadatos adicionales</p>
+<br>
+<h2>🎨 Interfaz de Usuario</h2>
+<br>
+<h3>Controles de Cámara en Tiempo Real:</h3>
+<li>**🟢 Iniciar Análisis:** Comienza el procesamiento automático</li>
+<li>**🔴 Detener Análisis:** Pausa el análisis en tiempo real</li>
+<li>**📁 Galería:** Selecciona imagen guardada</li>
+<li>**❌ Cerrar:** Regresa al menú principal</li>
+<br>
+<h3>Indicadores Visuales:</h3>
+<li>**Vista previa de cámara:** Muestra la imagen en tiempo real</li>
+<li>**Panel de resultados:** Información del análisis actualizada continuamente</li>
+<li>**Niveles de confianza:** Porcentajes de precisión para cada detección</li>
+<br>
+<h2>🔧 Configuración y Permisos</h2>
+<br>
+<h3>Permisos Requeridos:</h3>
+<li>**📷 Cámara:** Para análisis en tiempo real</li>
+<li>**📁 Almacenamiento:** Para acceso a galería</li>
+<li>**🌐 Internet:** Para descargar paquetes de idiomas (opcional)</li>
+<br>
+<h3>Configuración Offline:</h3>
+<li>La mayoría de funcionalidades trabajan completamente offline</li>
+<li>Para traducción: descarga paquetes de idiomas la primera vez</li>
+<li>OCR y detección funcionan sin conexión</li>
+<br>
+<h2>🚨 Solución de Problemas</h2>
+<br>
+<h3>Problemas Comunes:</h3>
+<br>
+<p>1. **Cámara no funciona:**</p>
+<p>   - Verifica permisos de cámara en Configuración > Aplicaciones</p>
+<p>   - Reinicia la aplicación</p>
+<br>
+<p>2. **Traducción no disponible:**</p>
+<p>   - Asegúrate de tener conexión a internet para descargar paquetes</p>
+<p>   - Los paquetes se descargan automáticamente la primera vez</p>
+<br>
+<p>3. **OCR no detecta texto:**</p>
+<p>   - Asegúrate de que el texto sea legible</p>
+<p>   - Mejora la iluminación</p>
+<p>   - Acerca o aleja la cámara para mejor enfoque</p>
+<br>
+<p>4. **Detección lenta:**</p>
+<p>   - Cierra otras aplicaciones para liberar memoria</p>
+<p>   - En dispositivos antiguos, usa modo galería en lugar de tiempo real</p>
+<br>
+<h2>📈 Rendimiento Óptimo</h2>
+<br>
+<h3>Recomendaciones:</h3>
+<li>**Iluminación:** Usa buena iluminación para mejor precisión</li>
+<li>**Estabilidad:** Mantén el dispositivo estable durante análisis</li>
+<li>**Distancia:** Posición óptima a 30-50cm del objeto</li>
+<li>**Memoria:** Cierra aplicaciones innecesarias para mejor rendimiento</li>
+<br>
+<h2>🆘 Soporte y Contacto</h2>
+<br>
+<p>Para soporte técnico o reportar problemas:</p>
+<li>**Desarrolladores:** Daniel Vega Miranda & Abraham Reyes Cuevas</li>
+<li>**Proyecto:** Práctica Universitaria - ML Kit Integration</li>
+<li>**Versión:** 2.0 - Edición Universitaria</li>
+<br>
+<hr>
+<br>
+<p><em>Este manual cubre todas las funcionalidades implementadas en la versión universitaria de ML Translate App. La aplicación cumple con los requisitos académicos de integración de múltiples tecnologías ML Kit con interfaz intuitiva y funcionalidades tanto offline como online.</em></p>
+<br>
+
+</body>
+</html>

@@ -3,4 +3,13 @@
     <item
         android:id="@+id/models"
         android:title="Downloaded Models" />
+    <item
+        android:id="@+id/mlkit_features"
+        android:title="🤖 ML Kit Features" />
+    <item
+        android:id="@+id/analysis_history"
+        android:title="📋 Analysis History" />
+    <item
+        android:id="@+id/barcode_scanner"
+        android:title="Scan Barcode" />
 </menu>

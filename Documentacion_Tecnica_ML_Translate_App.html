@@ -1,0 +1,431 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ML Translate App - Documentation</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #7f8c8d;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border-left: 4px solid #3498db;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 0;
+            padding-left: 20px;
+            color: #7f8c8d;
+        }
+        .emoji {
+            font-size: 1.2em;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+<h1>Documentación Técnica</h1>
+<h2>ML Translate App - Arquitectura y Implementación</h2>
+<br>
+<p><strong>Desarrollado por:</strong></p>
+<li>Daniel Vega Miranda</li>
+<li>Abraham Reyes Cuevas</li>
+<br>
+<p>**Fecha:** Junio 2025</p>
+<p>**Versión:** 2.0 - Edición Universitaria</p>
+<br>
+<hr>
+<br>
+<h2>🏗️ Arquitectura General</h2>
+<br>
+<h3>Stack Tecnológico:</h3>
+<li>**Lenguaje:** Kotlin</li>
+<li>**Framework:** Android SDK (API 21+)</li>
+<li>**ML Framework:** Google ML Kit</li>
+<li>**Cámara:** CameraX</li>
+<li>**UI:** Material Design Components</li>
+<li>**Persistencia:** SharedPreferences + Gson</li>
+<li>**Arquitectura:** MVVM Pattern con Fragment-based UI</li>
+<br>
+<h3>Estructura del Proyecto:</h3>
+<pre><code>
+app/src/main/java/com/example/translateApp/
+├── model/
+│   └── AnalysisHistoryItem.kt
+├── utils/
+│   ├── AnalysisHistory.kt
+│   └── CameraUtils.kt
+├── view/
+│   ├── TranslateActivity.kt (Actividad Principal)
+│   ├── HistoryActivity.kt
+│   ├── MLKitFeaturesDialog.kt
+│   ├── ImageLabelingDialog.kt
+│   ├── ImageLabelingDialogRealtime.kt
+│   ├── BarcodeScannerDialogRealtime.kt
+│   ├── FaceDetectionDialogRealtime.kt
+│   ├── LandmarkDetectionDialogRealtime.kt
+│   └── HistoryDetailDialog.kt
+└── res/
+    ├── layout/ (Layouts XML)
+    └── values/ (Strings, Colors, Themes)
+</pre>
+<br>
+<h2>🧩 Componentes Principales</h2>
+<br>
+<h3>1. TranslateActivity.kt</h3>
+<p>**Responsabilidad:** Actividad principal que maneja traducción básica y coordinación general.</p>
+<br>
+<p><strong>Características clave:</strong></p>
+<li>Detección automática de idioma</li>
+<li>Traducción offline/online</li>
+<li>OCR integrado</li>
+<li>Navegación a funcionalidades ML Kit</li>
+<br>
+<p><strong>Métodos públicos expuestos:</strong></p>
+<pre><code>
+fun openImageSelector() // Para OCR desde menú ML Kit
+fun focusOnTextInput()  // Para enfocar campo de texto
+</pre>
+<br>
+<h3>2. MLKitFeaturesDialog.kt</h3>
+<p>**Responsabilidad:** Menú central para acceso a todas las funcionalidades ML Kit.</p>
+<br>
+<p><strong>Funcionalidades:</strong></p>
+<li>Navegación a diálogos especializados</li>
+<li>Coordinación con actividad principal</li>
+<li>Interfaz unificada para acceso a ML Kit</li>
+<br>
+<h3>3. Diálogos de Tiempo Real</h3>
+<br>
+<h4>BarcodeScannerRealtimeDialog.kt</h4>
+<p>**Tecnología:** ML Kit Barcode Scanning + CameraX</p>
+<p><strong>Formatos soportados:</strong></p>
+<li>QR_CODE, AZTEC, EAN_13, EAN_8</li>
+<li>UPC_A, UPC_E, CODE_39, CODE_93</li>
+<li>CODE_128, DATA_MATRIX, PDF417, ITF, CODABAR</li>
+<br>
+<p><strong>Implementación:</strong></p>
+<pre><code>
+private class BarcodeAnalyzer(private val listener: (List<Barcode>) -> Unit) : ImageAnalysis.Analyzer {
+    override fun analyze(imageProxy: ImageProxy) {
+        val mediaImage = imageProxy.image
+        if (mediaImage != null) {
+            val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
+            val scanner = BarcodeScanning.getClient(options)
+            scanner.process(image)
+                .addOnSuccessListener { barcodes -> listener(barcodes) }
+                .addOnCompleteListener { imageProxy.close() }
+        }
+    }
+}
+</pre>
+<br>
+<h4>FaceDetectionDialogRealtime.kt</h4>
+<p>**Tecnología:** ML Kit Face Detection + CameraX</p>
+<p><strong>Características detectadas:</strong></p>
+<li>Posición y dimensiones del rostro</li>
+<li>Probabilidad de sonrisa</li>
+<li>Estado de ojos (abierto/cerrado)</li>
+<li>Ángulos de rotación (Euler Y, Z)</li>
+<li>Seguimiento facial</li>
+<br>
+<p><strong>Configuración del detector:</strong></p>
+<pre><code>
+val options = FaceDetectorOptions.Builder()
+    .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
+    .setClassificationMode(FaceDetectorOptions.CLASSIFICATION_MODE_ALL)
+    .setMinFaceSize(0.15f)
+    .build()
+</pre>
+<br>
+<h4>ImageLabelingRealtimeDialog.kt</h4>
+<p>**Tecnología:** ML Kit Image Labeling + CameraX</p>
+<p><strong>Capacidades:</strong></p>
+<li>Identificación de objetos en tiempo real</li>
+<li>Niveles de confianza configurables</li>
+<li>Etiquetado multicategoría</li>
+<br>
+<h4>LandmarkDetectionDialogRealtime.kt</h4>
+<p>**Tecnología:** ML Kit Image Labeling (filtrado por palabras clave) + CameraX</p>
+<p><strong>Enfoque especializado:</strong></p>
+<li>Filtrado por palabras clave arquitectónicas</li>
+<li>Identificación de monumentos y edificios</li>
+<li>Análisis de elementos históricos</li>
+<br>
+<p><strong>Palabras clave filtradas:</strong></p>
+<pre><code>
+private val LANDMARK_KEYWORDS = setOf(
+    "building", "architecture", "monument", "statue", "church",
+    "cathedral", "temple", "palace", "castle", "tower", "bridge",
+    "landmark", "museum", "historical", "ancient", "art"
+)
+</pre>
+<br>
+<h2>🎥 Implementación CameraX</h2>
+<br>
+<h3>Configuración Base:</h3>
+<pre><code>
+private fun startCamera() {
+    val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
+
+    cameraProviderFuture.addListener({
+        val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+
+        val preview = Preview.Builder().build().also {
+            it.setSurfaceProvider(cameraPreview?.surfaceProvider)
+        }
+
+        val imageAnalyzer = ImageAnalysis.Builder()
+            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+            .build()
+            .also {
+                it.setAnalyzer(cameraExecutor, AnalyzerImplementation { results ->
+                    if (isAnalyzing) processResults(results)
+                })
+            }
+
+        cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalyzer)
+    }, ContextCompat.getMainExecutor(requireContext()))
+}
+</pre>
+<br>
+<h3>Estrategia de Análisis:</h3>
+<li>**Backpressure:** `STRATEGY_KEEP_ONLY_LATEST` para rendimiento óptimo</li>
+<li>**Threading:** `SingleThreadExecutor` para procesamiento ML</li>
+<li>**UI Updates:** `runOnUiThread` para actualización segura de UI</li>
+<br>
+<h2>💾 Sistema de Persistencia</h2>
+<br>
+<h3>Modelo de Datos:</h3>
+<pre><code>
+@Parcelize
+data class AnalysisHistoryItem(
+    val id: String = "",
+    val type: String = "", // text_recognition, barcode_scanning, etc.
+    val inputText: String = "",
+    val result: String = "",
+    val confidence: Float = 0f,
+    val timestamp: Long = System.currentTimeMillis(),
+    val additionalData: Map<String, String> = emptyMap()
+) : Parcelable
+</pre>
+<br>
+<h3>Gestión de Historial:</h3>
+<pre><code>
+object AnalysisHistory {
+    private const val MAX_HISTORY_SIZE = 100
+
+    fun addToHistory(context: Context, item: AnalysisHistoryItem) {
+        val prefs = getPreferences(context)
+        val currentHistory = getHistory(context).toMutableList()
+        currentHistory.add(0, item.copy(id = UUID.randomUUID().toString()))
+
+        if (currentHistory.size > MAX_HISTORY_SIZE) {
+            currentHistory.removeAt(currentHistory.size - 1)
+        }
+
+        val json = gson.toJson(currentHistory)
+        prefs.edit().putString(HISTORY_KEY, json).apply()
+    }
+}
+</pre>
+<br>
+<h2>🔒 Gestión de Permisos</h2>
+<br>
+<h3>Permisos Implementados:</h3>
+<pre><code>
+companion object {
+    private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+    private const val PERMISSION_REQUEST_CODE = 1001
+}
+
+private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
+    ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
+}
+</pre>
+<br>
+<h3>Flujo de Permisos:</h3>
+<p>1. Verificación al inicializar diálogo</p>
+<p>2. Solicitud automática si no están concedidos</p>
+<p>3. Fallback a modo galería si se deniegan</p>
+<p>4. Mensaje informativo al usuario</p>
+<br>
+<h2>🏗️ Patrones de Diseño Implementados</h2>
+<br>
+<h3>1. Observer Pattern</h3>
+<li>Callback listeners para análisis ML Kit</li>
+<li>UI updates mediante `runOnUiThread`</li>
+<br>
+<h3>2. Strategy Pattern</h3>
+<li>Diferentes analizadores para cada tipo de ML Kit</li>
+<li>Interfaz común `ImageAnalysis.Analyzer`</li>
+<br>
+<h3>3. Factory Pattern</h3>
+<li>Creación de diálogos especializados</li>
+<li>Configuración de detectores ML Kit</li>
+<br>
+<h3>4. Singleton Pattern</h3>
+<li>`AnalysisHistory` para gestión centralizada</li>
+<li>`CameraUtils` para utilidades compartidas</li>
+<br>
+<h2>📊 Optimizaciones de Rendimiento</h2>
+<br>
+<h3>ML Kit:</h3>
+<li>**Confidence Threshold:** Configurado por funcionalidad</li>
+<li>**Performance Mode:** FAST para tiempo real, ACCURATE para análisis estático</li>
+<li>**Image Resolution:** Optimizada automáticamente por CameraX</li>
+<br>
+<h3>CameraX:</h3>
+<li>**BackpressureStrategy:** Solo procesa frame más reciente</li>
+<li>**Threading:** Ejecutor dedicado para ML processing</li>
+<li>**Memory Management:** Cierre automático de `ImageProxy`</li>
+<br>
+<h3>UI:</h3>
+<li>**Fragment-based:** Carga modular de funcionalidades</li>
+<li>**RecyclerView:** Para historial con ViewHolder pattern</li>
+<li>**Lazy Loading:** Inicialización bajo demanda</li>
+<br>
+<h2>🔧 Configuración Build</h2>
+<br>
+<h3>Dependencies Clave:</h3>
+<pre><code>
+// CameraX para cámara en tiempo real
+implementation "androidx.camera:camera-core:1.3.1"
+implementation "androidx.camera:camera-camera2:1.3.1"
+implementation "androidx.camera:camera-lifecycle:1.3.1"
+implementation "androidx.camera:camera-view:1.3.1"
+
+// ML Kit modules
+implementation 'com.google.mlkit:translate:17.0.2'
+implementation 'com.google.mlkit:language-id:17.0.5'
+implementation 'com.google.mlkit:text-recognition:16.0.0'
+implementation 'com.google.mlkit:barcode-scanning:17.2.0'
+implementation 'com.google.mlkit:image-labeling:17.0.7'
+implementation 'com.google.mlkit:face-detection:16.1.5'
+
+// Persistencia y utilidades
+implementation 'com.google.code.gson:gson:2.10.1'
+implementation 'androidx.cardview:cardview:1.0.0'
+</pre>
+<br>
+<h3>Configuración ProGuard:</h3>
+<li>Keep classes ML Kit</li>
+<li>Preserve modelo annotations</li>
+<li>Mantener interfaces CameraX</li>
+<br>
+<h2>🧪 Testing y Debugging</h2>
+<br>
+<h3>Estrategias de Debug:</h3>
+<li>Logging detallado con tags específicos</li>
+<li>Try-catch comprehensivo para ML operations</li>
+<li>Validación de permisos en runtime</li>
+<li>Error handling para fallos de cámara</li>
+<br>
+<h3>Métricas de Performance:</h3>
+<li>Tiempo de inicialización de cámara</li>
+<li>Latencia de análisis ML Kit</li>
+<li>Uso de memoria durante operaciones</li>
+<li>Framerate de análisis en tiempo real</li>
+<br>
+<h2>🚀 Deployment</h2>
+<br>
+<h3>Requisitos Mínimos:</h3>
+<li>Android API 21+ (Android 5.0)</li>
+<li>Camera2 API support</li>
+<li>Mínimo 2GB RAM para rendimiento óptimo</li>
+<li>50MB espacio libre para paquetes ML Kit</li>
+<br>
+<h3>Optimizaciones APK:</h3>
+<li>Modularización ML Kit (descarga bajo demanda)</li>
+<li>Compresión de recursos</li>
+<li>Eliminación de código no utilizado</li>
+<li>Vector drawables para iconografía</li>
+<br>
+<h2>🔮 Arquitectura Extensible</h2>
+<br>
+<h3>Puntos de Extensión:</h3>
+<p>1. **Nuevos Detectores ML Kit:** Implementar `ImageAnalysis.Analyzer`</p>
+<p>2. **Nuevos Formatos de Export:** Extender `AnalysisHistory`</p>
+<p>3. **UI Personalizada:** Fragment modular system</p>
+<p>4. **Nuevos Idiomas:** Configuración en `strings.xml`</p>
+<br>
+<h3>Consideraciones Futuras:</h3>
+<li>Integración con Firebase ML Kit</li>
+<li>Soporte para modelos custom TensorFlow Lite</li>
+<li>Análisis de video en tiempo real</li>
+<li>Sincronización cloud del historial</li>
+<br>
+<hr>
+<br>
+<h2>📋 Resumen Técnico</h2>
+<br>
+<p>**Funcionalidades ML Kit Implementadas:** 6+</p>
+<li>✅ Text Recognition (OCR)</li>
+<li>✅ Language Translation</li>
+<li>✅ Barcode Scanning (Real-time)</li>
+<li>✅ Image Labeling (Real-time)</li>
+<li>✅ Face Detection (Real-time)</li>
+<li>✅ Landmark Detection (Real-time)</li>
+<br>
+<p><strong>Características Técnicas:</strong></p>
+<li>✅ Cámara en tiempo real (CameraX)</li>
+<li>✅ Análisis offline/online</li>
+<li>✅ Historial persistente</li>
+<li>✅ Interfaz intuitiva</li>
+<li>✅ Gestión de permisos</li>
+<li>✅ Optimización de rendimiento</li>
+<li>✅ Arquitectura modular y extensible</li>
+<br>
+<p><strong>Cumplimiento Académico:</strong></p>
+<li>✅ Más de 3 funcionalidades ML Kit diferentes</li>
+<li>✅ Combinación e integración de tecnologías</li>
+<li>✅ Interfaz intuitiva y moderna</li>
+<li>✅ Procesamiento offline y online</li>
+<li>✅ Visualización clara de resultados</li>
+<li>✅ Gestión completa de historial</li>
+<li>✅ Adaptación para plataforma especializada (Android)</li>
+<br>
+<p><em>Esta documentación técnica detalla la implementación completa de ML Translate App versión universitaria, desarrollada como proyecto académico integrando múltiples tecnologías de Machine Learning con arquitectura Android moderna.</em></p>
+<br>
+
+</body>
+</html>

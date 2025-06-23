@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@drawable/rounded_dialog_bg">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Funcionalidades ML Kit"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Selecciona una funcionalidad de Machine Learning:"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/dark_gray" />
+
+    <!-- Funcionalidades principales -->
+    <Button
+        android:id="@+id/btnTextRecognition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:text="📄 Reconocimiento de Texto (OCR)"
+        android:textSize="16sp"
+        android:padding="16dp"
+        android:backgroundTint="@color/primary_color" />
+
+    <Button
+        android:id="@+id/btnTranslation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:text="🌐 Traducción de Texto"
+        android:textSize="16sp"
+        android:padding="16dp"
+        android:backgroundTint="@color/primary_color" />
+
+    <Button
+        android:id="@+id/btnBarcodeScanner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:text="📊 Escáner de Códigos de Barras"
+        android:textSize="16sp"
+        android:padding="16dp"
+        android:backgroundTint="@color/primary_color" />
+
+    <Button
+        android:id="@+id/btnImageLabeling"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:text="🏷️ Etiquetado de Imágenes"
+        android:textSize="16sp"
+        android:padding="16dp"
+        android:backgroundTint="@color/accent_color" />
+
+    <Button
+        android:id="@+id/btnFaceDetection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:text="😊 Detección de Rostros"
+        android:textSize="16sp"
+        android:padding="16dp"
+        android:backgroundTint="@color/accent_color" />
+
+    <Button
+        android:id="@+id/btnLandmarkDetection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="🏛️ Detección de Monumentos"
+        android:textSize="16sp"
+        android:padding="16dp"
+        android:backgroundTint="@color/accent_color" />
+
+    <!-- Información combinada -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="✨ Funcionalidades Combinadas:\n• OCR + Traducción automática\n• Etiquetado + Análisis de contenido\n• Códigos de barras + Información inteligente"
+        android:textSize="14sp"
+        android:layout_marginBottom="16dp"
+        android:padding="12dp"
+        android:background="@drawable/text_result_background"
+        android:textColor="@color/dark_gray" />
+
+    <Button
+        android:id="@+id/btnClose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cerrar"
+        android:backgroundTint="@color/secondary_color" />
+
+</LinearLayout>

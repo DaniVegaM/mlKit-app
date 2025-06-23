@@ -11,4 +11,12 @@
     <color name="edit_text_background">#FFFFFFFF</color>
     <color name="container_bg">#F5F5F5</color>
     <color name="result_text_color">#0051B3</color>
+    <color name="ic_launcher_background">#3DDC84</color>
+    
+    <!-- Colores adicionales para ML Kit Features -->
+    <color name="primary_color">#4CAF50</color>
+    <color name="secondary_color">#FFC107</color>
+    <color name="accent_color">#FF5722</color>
+    <color name="light_gray">#F0F0F0</color>
+    <color name="dark_gray">#666666</color>
 </resources>

@@ -65,6 +65,7 @@ class TranslateActivity : AppCompatActivity() {
     private lateinit var downloadedModelDialog: Dialog
     private lateinit var popupMenu: PopupMenu
     private lateinit var modelDownloadDialog: Dialog
+    private lateinit var barcodeScannerDialog: BarcodeScannerDialog
     private var doNotShowAlertBoxFlag = false
 
     private var speechRecognizer: SpeechRecognizer? = null
@@ -149,7 +150,20 @@ class TranslateActivity : AppCompatActivity() {
                     downloadedModelDialog.show()
                     true
                 }
-
+                R.id.mlkit_features -> {
+                    val mlkitDialog = MLKitFeaturesDialog()
+                    mlkitDialog.show(supportFragmentManager, "MLKitFeatures")
+                    true
+                }
+                R.id.analysis_history -> {
+                    val intent = Intent(this, HistoryActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.barcode_scanner -> {
+                    showBarcodeScannerDialog()
+                    true
+                }
                 else -> false
             }
         }
@@ -161,13 +175,18 @@ class TranslateActivity : AppCompatActivity() {
         }
     }
 
+    // Método público para abrir el selector de imagen desde otros componentes
+    fun openImageSelector() {
+        if (binding.FromLang.selectedItem == SupportedLanguages.DETECT_LANG.value) {
+            shortToast(this, getString(R.string.select_language))
+            return
+        }
+        selectImageCustomDialog.show()
+    }
+
     private fun selectImageListener() {
         binding.selectImage.setOnClickListener {
-            if (binding.FromLang.selectedItem == SupportedLanguages.DETECT_LANG.value) {
-                shortToast(this, getString(R.string.select_language))
-                return@setOnClickListener
-            }
-            selectImageCustomDialog.show()
+            openImageSelector()
         }
     }
 
@@ -1169,5 +1188,18 @@ class TranslateActivity : AppCompatActivity() {
             latestTmpUri = uri
             takeImageResult.launch(uri)
         }
+    }
+
+    private fun showBarcodeScannerDialog() {
+        barcodeScannerDialog = BarcodeScannerDialog()
+        barcodeScannerDialog.show(supportFragmentManager, "BarcodeScannerDialog")
+    }
+
+    // Método público para enfocar en el campo de texto de entrada
+    fun focusOnTextInput() {
+        binding.sourceText.requestFocus()
+        // Opcional: mostrar el teclado
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager
+        imm.showSoftInput(binding.sourceText, android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT)
     }
 }
